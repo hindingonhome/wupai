@@ -1,3 +1,4 @@
+import {popovers} from './popovers.mjs';
 import {createTextureExports} from './texture-export.mjs';
 import {ObjectPatterns,defaultPatterns} from './object-patterns.mjs';
 import {TextureCatalog,textureColors} from './texture-catalog.mjs';
@@ -63,20 +64,17 @@ try{viewer=new GalleryViewer($('viewport'),status);}catch(e){loading(false);$('l
 initLightingControls(viewer);
 const drawers={model:['story-panel','about-toggle'],lab:['workbench','lab-toggle'],fruit:['fruit-panel','fruit-toggle'],view:['view-panel','view-toggle']};
 for(const [id] of Object.values(drawers))$('site-header').append($(id));
-let active=null,pinned=false,openTimer,closeTimer;
-function panel(which,open,pin=false){clearTimeout(openTimer);clearTimeout(closeTimer);active=open?which:null;pinned=open&&pin;for(const [key,[id,button]]of Object.entries(drawers)){$(id).hidden=key!==active;$(button).setAttribute('aria-expanded',String(key===active));}$('drawer-shade').hidden=!open;document.body.classList.toggle('drawer-open',open);}
+const fitDrawers=()=>{const bottom=Math.min(innerHeight-12,...[...document.querySelectorAll('.object-controls,#capture')].map(el=>el.getBoundingClientRect().top-12));for(const [id]of Object.values(drawers)){const element=$(id);if(!element.hidden)element.style.maxHeight=Math.max(100,bottom-element.getBoundingClientRect().top)+'px';}};
+const syncDrawers=()=>{const open=Object.keys(drawers).some(key=>popovers.isOpen(key));$('drawer-shade').hidden=!open;document.body.classList.toggle('drawer-open',open);fitDrawers();};
+function panel(which,open){if(open)popovers.open(which);else for(const key of Object.keys(drawers))popovers.close(key);}
 for(const [key,[id,button]]of Object.entries(drawers)){
- $(button).onclick=()=>panel(key,!(active===key&&pinned),true);
- $(button).addEventListener('pointerenter',e=>{if(e.pointerType==='touch'||!matchMedia('(hover:hover)').matches)return;clearTimeout(openTimer);clearTimeout(closeTimer);if(active===key)return;openTimer=setTimeout(()=>panel(key,true,false),active?40:90);});
- $(button).addEventListener('pointerleave',()=>clearTimeout(openTimer));
- $(id).addEventListener('pointerenter',()=>{clearTimeout(closeTimer);});
+ popovers.register(key,{element:$(id),trigger:$(button),hover:true,show:()=>{$(id).hidden=false;syncDrawers();},hide:()=>{$(id).hidden=true;syncDrawers();}});
+ $(button).onclick=()=>popovers.toggle(key);
 }
-$('site-header').addEventListener('pointerleave',()=>{clearTimeout(openTimer);if(!pinned)closeTimer=setTimeout(()=>panel(null,false),240);});
-for(const id of ['close-lab','close-story','close-view','close-fruit','drawer-shade'])$(id).onclick=()=>panel(null,false);
-$('help-open').addEventListener('click',()=>panel(null,false));
-document.addEventListener('keydown',e=>{if(e.key==='Escape')panel(null,false);});
-$('site-header').addEventListener('focusout',()=>{setTimeout(()=>{if(active&&document.activeElement!==document.body&&!document.querySelector('.library-dialog[open]')&&!document.activeElement.closest('.collection-menu')&&!$('site-header').contains(document.activeElement))panel(null,false);},0);});
-window.addEventListener('libraryediting',()=>{clearTimeout(openTimer);clearTimeout(closeTimer);if(active)pinned=true;});
+for(const [id,key]of [['close-lab','lab'],['close-story','model'],['close-view','view'],['close-fruit','fruit']])$(id).onclick=()=>popovers.close(key,{restoreFocus:true});
+$('drawer-shade').onclick=()=>panel(null,false);
+$('help-open').addEventListener('click',()=>popovers.closeAll());
+window.addEventListener('resize',()=>requestAnimationFrame(fitDrawers));
 const textureFiles=new Map();
 function rememberFile(map,file,container,onSelect){map.set(file.name,file);const host=$(container);host.replaceChildren();for(const [name,item] of map){const button=document.createElement('button');button.textContent=name;button.dataset.userContent='';button.title=name;button.onclick=()=>editSurface(()=>onSelect(item));host.append(button);}}
 function collectionButton(item){const button=document.createElement('button');button.dataset.kind=item.id;button.className='collection-item';const image=document.createElement('img');image.alt='';image.src=globalThis.MUSEUM_ASSETS?.[item.thumbnail]||item.thumbnail;const label=document.createElement('span');label.textContent=item.name;button.append(image,label);button.onclick=async()=>{button.classList.add('pending');button.setAttribute('aria-busy','true');try{await selectArtifact(item.id);}finally{button.classList.remove('pending');button.removeAttribute('aria-busy');}};return button;}

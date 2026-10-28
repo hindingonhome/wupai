@@ -1,3 +1,4 @@
+import {popovers} from './popovers.mjs';
 import {swatchItem} from './swatch-item.mjs';
 import {styleSwatch} from './swatch-style.mjs';
 import {ARTIFACTS} from './artifact-library.mjs';
@@ -13,16 +14,14 @@ for(const id of Object.keys(FRUIT_PROFILES))add(id);
 export const VASE_PROFILE_IDS=Object.freeze(ordered);
 
 export function initVaseTextures({viewer,getKind,getOwned=()=>[],getTextures=()=>[],getSurface=()=>'',onTexture=()=>{},onApplied=()=>{},onRemove=()=>{}}){
- const groups=[];let active=null,pinned=false,closeTimer;
- function close(){clearTimeout(closeTimer);if(active){active.popover.hidden=true;active.more.setAttribute('aria-expanded','false');active=null;}pinned=false;}
+ const groups=[];
+ function close(){for(const group of groups)popovers.close(group.popover.id);}
  function position(group){
   const rect=group.more.getBoundingClientRect(),panel=group.popover;
   const width=panel.getBoundingClientRect().width,height=panel.getBoundingClientRect().height;
   panel.style.left=Math.max(12,Math.min(innerWidth-width-12,rect.left+rect.width/2-width/2))+'px';
   panel.style.top=Math.max(12,rect.top-height-12)+'px';
  }
- function open(group,pin=false){clearTimeout(closeTimer);if(active!==group)close();active=group;pinned=pin;group.popover.hidden=false;group.more.setAttribute('aria-expanded','true');position(group);}
- function scheduleClose(){if(!pinned)closeTimer=setTimeout(close,220);}
  function syncPressed(){for(const group of groups){for(const button of group.buttons)button.setAttribute('aria-pressed',String(!viewer.settings?.solid&&!viewer.settings?.original&&(viewer.settings?.vaseProfile===button.dataset.vaseProfile||(viewer.settings?.fruitFlow&&viewer.settings?.fruitProfile===button.dataset.vaseProfile))));for(const button of group.custom.values())button.setAttribute('aria-pressed',String(!viewer.settings?.original&&getSurface()===button.dataset.textureId));}}
  for(const [index,host]of [...document.querySelectorAll('.quick-patterns,.sample-row')].entries()){
   const more=document.createElement('button');more.type='button';more.className='vase-more';more.innerHTML='<span class="sr-only">...</span><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="5" cy="12" r="1.6"/><circle cx="12" cy="12" r="1.6"/><circle cx="19" cy="12" r="1.6"/></svg>';more.setAttribute('aria-label','更多花瓶纹样');more.setAttribute('aria-expanded','false');more.setAttribute('aria-controls','vase-textures-'+index);
@@ -38,13 +37,10 @@ export function initVaseTextures({viewer,getKind,getOwned=()=>[],getTextures=()=
   }
   group.base=[...host.querySelectorAll('[data-surface], [data-lacquer]')];if(host.matches('.quick-patterns'))for(const button of group.base){const next=button.nextSibling;button._swatchItem=swatchItem(button,()=>onRemove(button.dataset.surface||'lacquer'));host.insertBefore(button._swatchItem,next);}
   const clear=host.querySelector('#clear-texture');host.insertBefore(more,clear);
-  more.onclick=()=>{if(active===group&&pinned)close();else open(group,true);};
-  more.addEventListener('pointerenter',event=>{if(event.pointerType!=='touch'&&matchMedia('(hover:hover)').matches)open(group,false);});
-  more.addEventListener('pointerleave',scheduleClose);popover.addEventListener('pointerenter',()=>clearTimeout(closeTimer));popover.addEventListener('pointerleave',scheduleClose);
+  popovers.register(popover.id,{element:popover,trigger:more,hover:true,parent:host.matches('.sample-row')?'lab':undefined,show:()=>{popover.hidden=false;position(group);}});
+  more.onclick=()=>popovers.toggle(popover.id);
  }
- document.addEventListener('pointerdown',event=>{if(active&&!active.popover.contains(event.target)&&!active.more.contains(event.target))close();});
  document.addEventListener('click',event=>{const button=event.target.closest?.('.swatch');if(button&&!button.dataset.vaseProfile&&button.closest('.quick-patterns,.sample-row,.vase-texture-popover'))for(const group of groups)for(const extra of group.buttons)extra.setAttribute('aria-pressed','false');});
- document.addEventListener('keydown',event=>{if(event.key==='Escape'&&active){const trigger=active.more;close();trigger.focus();}});
  window.addEventListener('resize',close);window.addEventListener('scroll',close,true);
  function refresh(){
   close();

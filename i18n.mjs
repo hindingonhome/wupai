@@ -1,4 +1,23 @@
-const entries=`撤销 · Ctrl+Z|Undo · Ctrl+Z
+const entries=`保存与作品|Save & works
+可继续编辑的作品|Editable works
+保存后，下次继续编辑。|Save now, continue editing next time.
+图片|Image
+模型|Model
+疏密与配色|Pattern & color
+转速|Speed
+撤销表面调整|Undo surface changes
+重做表面调整|Redo surface changes
+撤销派库操作|Undo library operation
+重做派库操作|Redo library operation
+撤销表面调整 · Ctrl+Z|Undo surface changes · Ctrl+Z
+重做表面调整 · Ctrl+Shift+Z / Ctrl+Y|Redo surface changes · Ctrl+Shift+Z / Ctrl+Y
+撤销派库操作 · Ctrl+Z|Undo library operation · Ctrl+Z
+重做派库操作 · Ctrl+Shift+Z / Ctrl+Y|Redo library operation · Ctrl+Shift+Z / Ctrl+Y
+快捷键当前作用于：表面调整|Shortcut target: Surface changes
+快捷键当前作用于：派库操作|Shortcut target: Library operations
+派库撤销与重做请前往首选项的“派库管理”。|Use Library management in Preferences to undo or redo library operations.
+保存可继续编辑的表面设计；图片由“保存与作品”导出。|Save editable surface designs. Export images from Save & works.
+撤销 · Ctrl+Z|Undo · Ctrl+Z
 重做 · Ctrl+Shift+Z / Ctrl+Y|Redo · Ctrl+Shift+Z / Ctrl+Y
 盘子顶面 · 平面投射|Plate top · Planar projection
 顶面平面投射|Top planar projection

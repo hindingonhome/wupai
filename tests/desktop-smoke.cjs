@@ -26,7 +26,7 @@ const path = require('node:path');
    assert.equal(await page.locator('[data-kind='+id+']').getAttribute('aria-pressed'),'true');
   }
   const download=async selector=>{await page.evaluate(()=>document.querySelector('#status').textContent='等待保存');await page.locator('#capture').click(); await page.locator(selector).click(); await page.waitForFunction(()=>/已导出/.test(document.querySelector('#status').textContent),undefined,{timeout:120000});};
-  await download('#export-menu button:first-child');
+  await download('#export-image');
   let png=fs.readdirSync(downloads).find(name=>name.endsWith('.png')); assert.ok(png); assert.equal(fs.readFileSync(path.join(downloads,png)).readUInt32BE(0),0x89504e47);
   await download('#export-model');
   let glb=fs.readdirSync(downloads).find(name=>name.endsWith('.glb')); assert.ok(glb); assert.equal(fs.readFileSync(path.join(downloads,glb)).readUInt32LE(0),0x46546c67);

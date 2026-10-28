@@ -98,3 +98,24 @@ nav{display:flex;align-items:center;justify-content:flex-end;gap:4px;height:100%
 #workbench>.texture-studio:first-of-type{margin-top:0!important}#workbench>#surface-library{margin-top:20px!important}.material-tooltip{max-width:calc(100vw - 24px);white-space:normal;overflow-wrap:anywhere;text-align:center}
 
 #library-settings-section>#preferences-add-collection{margin:2px 0 12px;min-height:38px}#library-settings-section>#collection-management:empty{display:none}#library-settings-section>.view-actions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:14px 0 2px}#library-settings-section>.view-actions>button{width:100%;min-height:38px}#library-settings-section>#library-history{margin:10px 0}#library-settings-section .management-row{margin:12px 0}
+
+/* V1.2.2: keep visible switching controls above the drawer shade. */
+.object-controls,.gallery-console{z-index:31}
+.speed-control{gap:7px;min-width:0;padding:0 4px;flex:none}
+.speed-control>span{font-size:11px;color:var(--muted);white-space:nowrap}
+#surface-adjust{white-space:nowrap;font-size:12px;padding:7px 11px}
+.export-menu{width:230px;min-width:0;box-sizing:border-box;max-width:calc(100vw - 24px);max-height:min(460px,calc(100dvh - 150px));overflow-y:auto}
+.export-group{padding:4px 0}
+.export-group+.export-group{border-top:1px solid var(--line);margin-top:4px;padding-top:8px}
+.export-group-label,.export-work-hint{font-size:11px;line-height:1.5;color:var(--muted);margin:2px 12px 5px}
+.export-work-hint{font-size:10px;margin-top:0}
+.export-menu .export-group>button{width:100%;display:block}
+#history-scope{padding:7px 0;line-height:1.65;color:var(--muted)}
+#surface-history-section .editor-history{display:flex;flex-wrap:wrap;gap:8px}
+#surface-history-section .editor-history>span{flex-basis:100%}
+#library-settings-section>.view-actions>button{padding:8px 5px;white-space:normal}
+@media(max-width:1100px) and (min-width:701px){.gallery-console{bottom:88px}}
+@media(max-width:700px){#surface-adjust{font-size:11px;padding:6px 9px}.speed-control input{width:70px}.speed-control{gap:5px}.speed-control>span{font-size:10px}}
+@media(max-height:600px) and (min-width:540px){.object-controls{gap:7px}.playback-row{gap:4px;padding-left:7px}.speed-control input{width:55px}#surface-adjust{font-size:10px;padding:5px 7px}}
+/* A fading delete badge keeps a stable hit area while the panel scrolls. */
+.swatch-item>.swatch-remove,.texture-studio .swatch-item>.swatch-remove{transform:none;transition:opacity .12s ease}

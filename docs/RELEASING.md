@@ -9,7 +9,7 @@
 ## 更新版本
 
 1. 修改源码、资源或固定缩略图，运行 `npm test`、`npm run build` 和浏览器检查。
-2. 更新 package.json 三段版本号，例如 1.2.1，并在 docs/releases/V1.2.1.md 写变更说明。
+2. 更新 package.json 三段版本号，例如 1.2.2，并在 docs/releases/V1.2.2.md 写变更说明。
 3. 同时更新 CHANGELOG.md。提交并推送 main，GitHub Actions 构建四个平台 ZIP、直接安装的安卓 APK 与校验表，共六项，并发布对应 V 标签。
 4. 检查 Actions 成功以及 Releases 附件。已发布版本不会自动覆盖，通常应递增版本号。
 
@@ -37,4 +37,4 @@
 
 V1.1.1起，PRODUCT_README.md、LICENSE、docs/COMMERCIAL-LICENSE.md、docs/PRIVACY.md及THIRD_PARTY_LICENSE.txt为说明源。执行 `node scripts/prepare-help.cjs` 更新help-content.mjs；两个网页构建器也会自动生成。不要只编辑生成模块。每个平台包包含User-Guide.md、LICENSE.txt、Commercial-License.md、Privacy.md、Support.md及第三方许可。许可修改须取得权利人确认，不追溯改写历史发行包。
 
-V1.2.1发布前应同步PRODUCT_README、CHANGELOG、隐私说明、docs/releases/V1.2.1.md和docs/物派-简明使用说明.pdf。浏览器测试默认使用Chromium，本机Edge通过PLAYWRIGHT_CHANNEL=msedge指定；不要在测试内硬编码平台浏览器。
+V1.2.2发布前应同步PRODUCT_README、CHANGELOG、隐私说明、docs/releases/V1.2.2.md和docs/物派-简明使用说明.pdf。浏览器测试默认使用Chromium，本机Edge通过PLAYWRIGHT_CHANNEL=msedge指定；不要在测试内硬编码平台浏览器。

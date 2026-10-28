@@ -1,8 +1,8 @@
 你目前使用 iPhone「文件」中的 HTML 预览。该方式不能作为完整的网页三维运行环境；更改模型或贴图不能解除预览器限制。
 
 在「文件」里直接使用：
-请下载并解压 Releases 中的 iPhone 平台 ZIP 包，在 Models 文件夹中打开 Mango-Original.usdz（芒果原配色）、Pear-Production.usdz（梨生产落地色）等 USDZ 文件，使用苹果原生三维查看器旋转、缩放查看。共 25 个文件。
-模型名：Vase 花瓶、Mango 芒果、Strawberry 草莓、Dragonfruit 火龙果、Pear 梨、Lychee 荔枝、Apple 苹果、GreenApple 青苹果、Persimmon 柿子、Peach 桃子、Watermelon 西瓜、Banana 香蕉、Banana2 香蕉2。
+请下载并解压 Releases 中的 iPhone 平台 ZIP 包，在 Models 文件夹中打开 Mango-Original.usdz（芒果原配色）、Pear-Production.usdz（梨生产落地色）等 USDZ 文件，使用苹果原生三维查看器旋转、缩放查看。共 26 个文件。
+模型名：Plate 圆形盘子、Vase 花瓶、Mango 芒果、Strawberry 草莓、Dragonfruit 火龙果、Pear 梨、Lychee 荔枝、Apple 苹果、GreenApple 青苹果、Persimmon 柿子、Peach 桃子、Watermelon 西瓜、Banana 香蕉、Banana2 香蕉2。
 后缀：Original 原配色、Production 生产落地色、Lacquer 仿大漆肌理。英文文件名用于避免下载平台重命名后覆盖其他模型。
 USDZ 是模型查看格式，不包含网页里的密度、材质切换、播放和主题控件。
 
@@ -10,5 +10,5 @@ USDZ 是模型查看格式，不包含网页里的密度、材质切换、播放
 平台包中的 Wupai.html 按需加载，并提供启动故障提示。完整界面仍需要支持本地 HTML、JavaScript 和 WebGL 的打开环境，不能仅通过修改 HTML 强制“文件”预览运行。
 本次提供安卓 APK 和手机离线 HTML，没有 iPhone IPA 安装包，也没有部署网站。
 
-验证范围：离线浏览器触屏模拟及启动故障提示；25 个 USDZ 沿用已交付资源。尚未进行 iPhone 真机测试。
+验证范围：离线浏览器触屏模拟及启动故障提示；26 个 USDZ 沿用已交付资源。尚未进行 iPhone 真机测试。
 苹果原生支持说明：https://developer.apple.com/videos/play/wwdc2021/10078/

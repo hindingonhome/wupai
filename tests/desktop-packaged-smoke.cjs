@@ -55,7 +55,7 @@ const progress=stage=>{if(process.env.WUPAI_TEST_REPORT)fs.writeFileSync(process
    await page.waitForFunction(()=>/已导出/.test(document.querySelector('#status').textContent),undefined,{timeout:120000});
    const names=fs.readdirSync(downloads),name=names.find(name=>name.endsWith(suffix));assert.ok(name,JSON.stringify(names));return path.join(downloads,name);
   };
-  const png=await download('#export-menu button:first-child','.png');assert.equal(fs.readFileSync(png).readUInt32BE(0),0x89504e47);
+  const png=await download('#export-image','.png');assert.equal(fs.readFileSync(png).readUInt32BE(0),0x89504e47);
   const glb=await download('#export-model','.glb');assert.equal(fs.readFileSync(glb).readUInt32LE(0),0x46546c67);
   await page.locator('#texture-file').setInputFiles(png);await page.waitForFunction(()=>!document.querySelector('#export-texture').disabled);
   assert.ok(await page.evaluate(async()=>{try{await wupaiDesktop.download('https://example.com/test.png','test.png');return false;}catch{return true;}}));
